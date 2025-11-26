@@ -1,0 +1,7 @@
+# Cloudflare Pages configuration
+[build]
+  command = "npm run build"
+  publish = ".svelte-kit/cloudflare"
+
+[build.environment]
+  NODE_VERSION = "18"
