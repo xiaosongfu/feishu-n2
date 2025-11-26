@@ -43,7 +43,7 @@
 </script>
 
 <svelte:head>
-    <title>Nav Hub - 导航中心</title>
+    <title>N2</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
         rel="preconnect"
