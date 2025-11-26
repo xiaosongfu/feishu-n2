@@ -38,7 +38,8 @@
         ),
     );
 
-    const categories = $derived(Object.keys(groupedLinks));
+    // Sort categories alphabetically
+    const categories = $derived(Object.keys(groupedLinks).sort());
 </script>
 
 <svelte:head>
@@ -56,55 +57,6 @@
 </svelte:head>
 
 <div class="container" class:dark={isDark}>
-    <header class="header">
-        <h1 class="title">Nav Hub</h1>
-        <p class="subtitle">您的资源导航中心</p>
-        <button
-            class="theme-toggle"
-            onclick={toggleTheme}
-            aria-label="Toggle theme"
-        >
-            {#if isDark}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-            {:else}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-                    ></path>
-                </svg>
-            {/if}
-        </button>
-    </header>
-
     {#if categories.length === 0}
         <div class="empty-state">
             <p>暂无导航链接，请检查飞书配置</p>
@@ -149,6 +101,52 @@
             {/each}
         </div>
     {/if}
+
+    <!-- Fixed theme toggle button at bottom right -->
+    <button
+        class="theme-toggle-fixed"
+        onclick={toggleTheme}
+        aria-label="Toggle theme"
+    >
+        {#if isDark}
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        {:else}
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                ></path>
+            </svg>
+        {/if}
+    </button>
 </div>
 
 <style>
@@ -170,7 +168,7 @@
     .container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 3rem 2rem;
+        padding: 2rem;
         transition: all 0.3s ease;
     }
 
@@ -179,20 +177,16 @@
         background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%);
     }
 
-    .header {
-        text-align: center;
-        margin-bottom: 4rem;
-        position: relative;
-    }
-
-    .theme-toggle {
-        position: absolute;
-        top: 0;
-        right: 0;
+    /* Fixed theme toggle button at bottom right */
+    .theme-toggle-fixed {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 0.75rem;
-        padding: 0.75rem;
+        border-radius: 50%;
+        width: 3.5rem;
+        height: 3.5rem;
         cursor: pointer;
         transition: all 0.3s ease;
         color: white;
@@ -200,51 +194,28 @@
         align-items: center;
         justify-content: center;
         backdrop-filter: blur(10px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
     }
 
-    .theme-toggle:hover {
+    .theme-toggle-fixed:hover {
         background: rgba(255, 255, 255, 0.2);
-        transform: scale(1.05);
+        transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
     }
 
-    .container:not(.dark) .theme-toggle {
-        background: rgba(0, 0, 0, 0.05);
+    .container:not(.dark) .theme-toggle-fixed {
+        background: rgba(255, 255, 255, 0.9);
         border-color: rgba(0, 0, 0, 0.1);
         color: #1f2937;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    .container:not(.dark) .theme-toggle:hover {
-        background: rgba(0, 0, 0, 0.1);
+    .container:not(.dark) .theme-toggle-fixed:hover {
+        background: white;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     }
 
-    .title {
-        font-size: 3.5rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin: 0 0 1rem 0;
-        letter-spacing: -0.02em;
-    }
-
-    .container:not(.dark) .title {
-        background: linear-gradient(135deg, #1f2937 0%, #6366f1 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .subtitle {
-        font-size: 1.25rem;
-        color: rgba(255, 255, 255, 0.9);
-        margin: 0;
-        font-weight: 400;
-    }
-
-    .container:not(.dark) .subtitle {
-        color: rgba(31, 41, 55, 0.8);
-    }
     .empty-state {
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
