@@ -1,0 +1,67 @@
+# 获取 tenant_access_token
+POST https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal
+Content-Type: application/json; charset=utf-8
+
+{
+    "app_id": "xx",
+    "app_secret": "xxx"
+}
+
+// {
+//   "code": 0,
+//   "expire": 5609,
+//   "msg": "ok",
+//   "tenant_access_token": "t-g104bu9sVZGUZXLPIN5XTWLH34F3TV4AGIHRWGQN"
+// }
+
+# 搜索记录
+POST  https://open.feishu.cn/open-apis/bitable/v1/apps/A560b3b4OalpKnsxC3ucdozsnJh/tables/tbl88Zfq2jgsXYmB/records/search
+Content-Type: application/json; charset=utf-8
+Authorization: Bearer t-g104bu9sVZGUZXLPIN5XTWLH34F3TV4AGIHRWGQN
+
+{
+    "field_names": [
+        "分类"
+    ],
+    "sort": [
+        {
+            "desc": false,
+            "field_name": "排序"
+        }
+    ]
+}
+
+// {
+//   "code": 0,
+//   "data": {
+//     "has_more": false,
+//     "items": [
+//       {
+//         "fields": {
+//           "分类": "04_Web3_Dev",
+//           "名称": [
+//             {
+//               "text": "Tenderly",
+//               "type": "text"
+//             }
+//           ],
+//           "图标": {
+//             "link": "https://dashboard.tenderly.co/static/media/logo-symbol.svg",
+//             "text": "https://dashboard.tenderly.co/static/media/logo-symbol.svg",
+//             "type": "url"
+//           },
+//           "序号": "1",
+//           "排序": 1000,
+//           "链接": {
+//             "link": "https://dashboard.tenderly.co/",
+//             "text": "https://dashboard.tenderly.co/",
+//             "type": "url"
+//           }
+//         },
+//         "record_id": "recG8w2VFC"
+//       }
+//     ],
+//     "total": 1
+//   },
+//   "msg": "success"
+// }

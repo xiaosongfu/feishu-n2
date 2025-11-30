@@ -57,7 +57,14 @@ export async function getNavLinks() {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify({})
+            body: JSON.stringify({
+                "sort": [
+                    {
+                        "desc": false,
+                        "field_name": "排序"
+                    }
+                ]
+            })
         });
 
 
